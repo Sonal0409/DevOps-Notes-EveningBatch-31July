@@ -1,0 +1,122 @@
+==========================================
+
+Jenkins Demo:
+
+1. Create a Freestyle job in jenkins
+
+2. Create a freestyle job and integrate it with GITHUB repostitory
+
+Demo 1: Create a Jenkisn job that will clone a github repository in jenkins workspace
+
+Create a new job in jenkins
+Click on + sign to create new item/job/project
+Give a name to the job : CloneRepo
+Select freestyle project and click on OK button
+On the project click on Source code management
+Select git option
+Give git hub repo path
+https://github.com/Sonal0409/myproject05Aug
+
+Branch name as ===>  Master
+
+Save the job
+
+Click on Build now
+
+Repository will be cloned in jenkins workspace
+
+You can go to job → workspace folder to see the files
+
+3. Create a frestyle job and integrate it with Maven
+
+MAVEN : 
+=========================
+> It is a powerful tool which helps in building, managing and documenting your project
+
+> Maven by heart is a plugin based tool
+
+> whenever a maven plugin or command is executed, its output will be stored in folder called target
+
+> It has 2 types of plugins:
+
+Core Build plugins:
+
+Task  						Plugin					GOAL/Commands 	output
+
+Compile the code  			Compiler				mvn compile		class files
+
+execute some Testcases		Surefire				mvn test		test passed/failed status
+
+Package the code			package					mvn package     .war file
+
+Clean the previous build	clean					mvn clean		clean up from target folder
+files
+
+Deploy artifact on 			deploy					mvn deploy
+artifactory
+
+install all dependencies	install					mvn install
+
+
+In maven multiple goals can be executed together
+
+# mvn clean install package
+
+
+
+Reporting plugins:
+==============================
+Will always generate reports, and in maven the reports are mostly generated in the format : xml,html,txt
+
+Task  						Plugin					GOAL/Commands 	output
+
+Code Review					pmd						mvn pmd:pmd		pmd.xml report	
+
+test reports				surefire				mvn test		surefire reports - xml,txt
+
+Code coverage				JACOCO,sonarqube		mvn sonar:sonar
+
+
+
+Structure MAVEN project
+
+src/main/java   ==> source code will be present
+src/test/java   ==> test cases will be present
+
+pom.xml   ==> heart of maven project
+
+ 1. dependencies   ==> tools downloded by developer to write code
+ 2. plugin information
+ 3. Repositories ( local, central & remote)
+URls or location from ehre we have to download the plugin or dependency
+
+===============================================
+
+Demo 3: Jenkins + maven integration:
+
+Jenkins--> Manage Jenkins-->Global Tool configuration
+
+Under GIT==> leave it same 
+
+Under maven ==> lets install it automatically
+Type mymaven and check the install automatically box.
+Save the changes
+
+
+**********************************
+Job Package Job
+***************************
+
+Go to jenkins--> new item--> Name= Package==> freestyle project
+==> source codemanagement==>select git==> give git repo name https://github.com/Sonal0409/DevOpsClassCodes
+ 
+build ==> invoke top level maven target==>mymaven
+
+ goal = clean install package
+
+==> save==> build now
+==> click on build number and see the console
+
+==> go to workspace ==> target/addressbook.war
+
+==========================================================================
