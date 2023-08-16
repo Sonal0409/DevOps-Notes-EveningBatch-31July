@@ -1,0 +1,50 @@
+---
+- hosts: winhost 
+  tasks: 
+  - name: Get disk facts
+    win_disk_facts:
+
+  - name: Output first disk size
+    debug:
+      var: ansible_facts.disks[0].size
+
+  - name: Convert first system disk into various formats
+    debug:
+      msg: '{{ disksize_gib }} vs {{ disksize_gib_human }}'
+    vars:
+      # Get first system disk
+      disk: '{{ ansible_facts.disks|selectattr("system_disk")|first }}'
+
+      # Show disk size in Gibibytes
+      disksize_gib_human: '{{ disk.size|filesizeformat(true) }}' 
+      disksize_gib: '{{ (disk.size/1024|pow(3))|round|int }} GiB'
+
+
+playbook2.yml
+
+---
+
+- hosts: winhost
+  tasks:
+  - name: Copy File
+    win_copy:
+     src: /tmp/win_file.txt
+     dest: C:\Users\Administrator\Downloads\win_file.txt
+
+
+playbook3.yml
+
+---
+- name: Installing Apache MSI
+  hosts: winhost
+  tasks:
+  - name: Download the Apache installer
+    win_get_url:
+     url: https://archive.apache.org/dist/httpd/binaries/win32/httpd-2.2.25-win32-x86-no_ssl.msi
+     dest: C:\ansible_examples\httpd-2.2.25-win32-x86-no_ssl.msi
+  - name: Install MSI
+    win_package:
+     path: C:\ansible_examples\httpd-2.2.25-win32-x86-no_ssl.msi
+     state: present
+     
+  
