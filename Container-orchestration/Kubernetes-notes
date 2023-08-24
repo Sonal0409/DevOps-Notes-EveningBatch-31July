@@ -108,3 +108,89 @@ spec:
     command: ["bash","-c", "sleep 6000"]
 
 ============================================
+
+Service Object:
+
+Cluster IP:
+==========================================
+
+Notes are available in below link:
+
+https://github.com/Sonal0409/Container-Orchestration-using-Kubernetes/tree/main/Day2-Notes/ServicesDemo/ClusterIPDemo
+
+NodePort:
+
+https://github.com/Sonal0409/Container-Orchestration-using-Kubernetes/tree/main/Day2-Notes/ServicesDemo/NodePortDemo
+
+Load Balancer:
+
+---
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+ name: myrs
+spec:
+ replicas: 3
+ selector:
+  matchLabels:
+   type: webserver
+ template:
+  metadata:
+   name: mypod
+   labels:
+    type: webserver
+  spec:
+   containers:
+    - name: c1
+      image: leaddevops/kubeserve:v1
+
+   
+---
+apiVersion: v1
+kind: Service
+metadata:
+ name: mysvc
+spec:
+ type: LoadBalancer
+ ports:
+  - targetPort: 80
+    port: 80
+ selector:
+  type: webserver
+
+=======================================
+
+Deployment and Service Object:
+=====================================
+
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: kubeserve
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: kubeserve
+  template:
+    metadata:
+      name: kubeserve
+      labels:
+        app: kubeserve
+    spec:
+      containers:
+       - name: app
+         image: leaddevops/kubeserve:v1
+        
+---
+kind: Service
+apiVersion: v1
+metadata:
+   name: kubeserve-svc
+spec:
+  type: NodePort
+  ports:
+    - port: 80
+      targetPort: 80
+  selector: 
+    app: kubeserve
