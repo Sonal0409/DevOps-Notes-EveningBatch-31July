@@ -1,0 +1,137 @@
+Complete any one of the project to get the certification
+Project 1 or Project 2
+Steps to complete the Course end Project 1:
+To provide the solution with screenshots
+
+1.	Provide the screenshot of your code repository in GIThub
+Github – you will using the repository : https://github.com/Sonal0409/DevOpsCodeDemo.git
+
+2.	You will provide screenshot of Building the code using pipeline as Code in Jenkins
+Create a pipeline with maven, in Jenkins. You will create stages:
+	Clone the repo
+	Compile
+	Test
+	Package   
+3.	You will also provide us screenshots of the console output of package job
+And target folder with addressbook.war file
+4.	In the same pipeline create a new stage to build the image. The code repository includes your docker file. Use the same dockerfile to build the image , use the similar code:
+
+stage('Build Image'){
+            steps{
+             sh “cp var/lib/Jenkins/jobane/workspace/target/addressbook.war .”
+               sh 'docker build -t myimagejenkins .'
+            }
+        }
+5.	Add one more stage to push image to dockerhub
+        stage('Push image to dockerhub'){
+            steps{
+                sh 'docker tag myimagejenkins edu123/myimagejenkins:$BUILD_NUMBER'
+                sh 'docker login --username edu123 --password Edureka@123'
+                sh 'docker push edu123/myimagejenkins:$BUILD_NUMBER'
+            }
+        }
+6.	Add a stage to create containers using the above image
+Save the job
+
+
+Go to instance to give jenkins permission to execute docker commands. As of now we are logged in as admin in jenkins and it doesnt have permission to run docker commands.
+
+
+So go to
+vim /etc/sudoers
+I
+add under root
+Jenkins ALL=NOPASSWD: ALL
+:wq!
+
+
+Go back to jenkins and build now.
+Provide screenshots of application deployed on container.
+[Optional]
+7.	You may install ansible on the same server as that of Jenkins
+ And run the following ansible playbook:
+
+---
+- hosts: webservers
+  become: true
+  become_user: root
+  tasks:
+  - name: install docker
+    yum: name=docker state=present
+  - name: start docker
+    service: name=docker state=started
+  - name: create container
+    command: docker run -itd -P myadd:ansible2
+
+Steps for execute project 2:
+
+Execute the same steps till docker as mentioned above
+Once image is available, you can push the image to dockerhub
+Then you will take the Kubernetes cluster (GKE or Lab)
+You will create replicas of the image that was created in docker step
+	You will screenshot of pods created
+If you want you can also implement HPA to monitor and autoscale your pods
+You will share screenshots of :
+	HPA YAML
+	Autoscaling pod
+You will then deploy Prometheus POD and give screenshot with some Prometheus queries
+You will also set up Grafana and give us the screenshot of Kubernetes dashboard
+
+
+
+
+
+	
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+
+
+
+
+
+
+
+
+
+
+
