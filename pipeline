@@ -1,0 +1,21 @@
+
+        pipeline{
+    
+        tools{
+         'maven mymaven'
+        }
+     
+        { label  'AGENTND'}
+         
+     
+     
+        stages{
+         stage('clone the repo')
+        }
+         step{
+             git 'https://github.com/Ayodele-Olafare/DevOpsCodeDemo.git'
+         }
+        }stage('Review the code'){
+         steps{
+             sh 'mvn pmd:pmd'
+         }
